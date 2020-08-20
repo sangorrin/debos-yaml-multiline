@@ -1,0 +1,30 @@
+{{- $multiline := or .multiline "false" }}
+
+architecture: amd64
+
+actions:
+  - action: debootstrap
+    suite: buster
+    variant: minbase
+
+  - action: recipe
+    description: "add string"
+    recipe: append.yaml
+    variables:
+      text: "great thanks"
+
+{{- if eq $multiline "true" }}
+  - action: recipe
+    description: "add string"
+    recipe: append.yaml
+    variables:
+      text: |
+        this is a multiline
+        string that should work
+        and put newlines as
+        necessary
+{{- end}}
+
+  - action: pack
+    file: result.tar.gz
+    compression: gz

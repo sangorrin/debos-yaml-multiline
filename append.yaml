@@ -1,0 +1,9 @@
+{{- $text := or .text "" }}
+
+architecture: amd64
+
+actions:
+  - action: run
+    description: "appending text"
+    chroot: true
+    command: echo "{{ $text }}" >> /etc/text
